@@ -53,3 +53,40 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+function newCard(Data) {
+  const cardWrapper = document.createElement("div");
+  const image = document.createElement("img");
+  const CardInfo = document.createElement("div");
+  const headingThree = document.createElement("h3");
+  const username = document.createElement("p");
+  const location = document.createElement("p");
+  const profile = document.createElement("p");
+  const profileLink = document.createElement("a");
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
+
+  // Classes
+  cardWrapper.classList.add("card");
+  image.src = Data.avatar_url;
+  CardInfo.classList.add("card-info");
+  headingThree.classList.add("name");
+  username.classList.add("username");
+
+  // Content
+  headingThree.textContent = null;
+}
+
+const axiosPromises = axios.get("https://api.github.com/users/nuvallo");
+console.log(axiosPromises);
+
+newCard(axiosPromises);
+
+axiosPromises.then(response => {
+  const newData = response.data;
+  console.log(newData);
+  axiosPromises.catch(error => {
+    console.log("The data was not returned", error);
+  });
+});
