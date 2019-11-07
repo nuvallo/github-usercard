@@ -71,25 +71,77 @@ function newCard(Data) {
 
   // Classes
   cardWrapper.classList.add("card");
-  image.src = null;
+  image.src = Data.then(response => {
+    const newData = response.data.avatar_url;
+    image.src = newData;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
   CardInfo.classList.add("card-info");
   headingThree.classList.add("name");
   username.classList.add("username");
-  profileLink.href = null;
+  profileLink.href = Data.then(response => {
+    const newData = response.data.html_url;
+    profileLink.href = newData;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
 
   // Content
-  headingThree.textContent = "Tyler";
-  username.textContent = axiosPromises.then(response => {
+  headingThree.textContent = Data.then(response => {
+    const newData = response.data.name;
+    if (newData === null) {
+      headingThree.textContent = "No Name";
+    } else {
+      headingThree.textContent = newData;
+    }
+
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
+  username.textContent = Data.then(response => {
     const newData = response.data.login;
     username.textContent = newData;
     axiosPromises.catch(error => {
       console.log("The data was not returned", error);
     });
   });
-  profile.textContent = null;
-  profileLink.textContent = null;
-  followers.textContent = null;
-  following.textContent = null;
+  location.textContent = Data.then(response => {
+    const newData = response.data.location;
+    location.textContent = `Location: ${newData}`;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
+
+  profile.textContent = `Profile: `;
+
+  profileLink.textContent = Data.then(response => {
+    const newData = response.data.html_url;
+    profileLink.textContent = newData;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
+
+  followers.textContent = Data.then(response => {
+    const newData = response.data.followers;
+    followers.textContent = `Followers: ${newData}`;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
+
+  following.textContent = Data.then(response => {
+    const newData = response.data.following;
+    following.textContent = `Following: ${newData}`;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
   bio.textContent = null;
 
   // Tree structure
@@ -109,5 +161,11 @@ function newCard(Data) {
 }
 const axiosPromises = axios.get("https://api.github.com/users/nuvallo");
 console.log(axiosPromises);
-
+axiosPromises.then(response => {
+  const newData = response.data;
+  console.log(newData);
+  axiosPromises.catch(error => {
+    console.log("The data was not returned", error);
+  });
+});
 newCard(axiosPromises);
