@@ -54,6 +54,8 @@ const followersArray = [];
   bigknell
 */
 
+const cards = document.querySelector(".cards");
+
 function newCard(Data) {
   const cardWrapper = document.createElement("div");
   const image = document.createElement("img");
@@ -69,24 +71,43 @@ function newCard(Data) {
 
   // Classes
   cardWrapper.classList.add("card");
-  image.src = Data.avatar_url;
+  image.src = null;
   CardInfo.classList.add("card-info");
   headingThree.classList.add("name");
   username.classList.add("username");
+  profileLink.href = null;
 
   // Content
-  headingThree.textContent = null;
-}
+  headingThree.textContent = "Tyler";
+  username.textContent = axiosPromises.then(response => {
+    const newData = response.data.login;
+    username.textContent = newData;
+    axiosPromises.catch(error => {
+      console.log("The data was not returned", error);
+    });
+  });
+  profile.textContent = null;
+  profileLink.textContent = null;
+  followers.textContent = null;
+  following.textContent = null;
+  bio.textContent = null;
 
+  // Tree structure
+  cards.append(cardWrapper);
+  cardWrapper.append(image);
+  cardWrapper.append(CardInfo);
+  CardInfo.append(headingThree);
+  CardInfo.append(username);
+  CardInfo.append(location);
+  CardInfo.append(profile);
+  profile.append(profileLink);
+  CardInfo.append(followers);
+  CardInfo.append(following);
+  CardInfo.append(bio);
+
+  return cardWrapper;
+}
 const axiosPromises = axios.get("https://api.github.com/users/nuvallo");
 console.log(axiosPromises);
 
 newCard(axiosPromises);
-
-axiosPromises.then(response => {
-  const newData = response.data;
-  console.log(newData);
-  axiosPromises.catch(error => {
-    console.log("The data was not returned", error);
-  });
-});
