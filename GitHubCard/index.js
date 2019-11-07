@@ -74,9 +74,6 @@ function newCard(Data) {
   image.src = Data.then(response => {
     const newData = response.data.avatar_url;
     image.src = newData;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
   CardInfo.classList.add("card-info");
   headingThree.classList.add("name");
@@ -84,9 +81,6 @@ function newCard(Data) {
   profileLink.href = Data.then(response => {
     const newData = response.data.html_url;
     profileLink.href = newData;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
 
   // Content
@@ -97,24 +91,14 @@ function newCard(Data) {
     } else {
       headingThree.textContent = newData;
     }
-
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
   username.textContent = Data.then(response => {
     const newData = response.data.login;
     username.textContent = newData;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
   location.textContent = Data.then(response => {
     const newData = response.data.location;
     location.textContent = `Location: ${newData}`;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
 
   profile.textContent = `Profile: `;
@@ -122,27 +106,22 @@ function newCard(Data) {
   profileLink.textContent = Data.then(response => {
     const newData = response.data.html_url;
     profileLink.textContent = newData;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
 
   followers.textContent = Data.then(response => {
     const newData = response.data.followers;
     followers.textContent = `Followers: ${newData}`;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
 
   following.textContent = Data.then(response => {
     const newData = response.data.following;
     following.textContent = `Following: ${newData}`;
-    axiosPromises.catch(error => {
-      console.log("The data was not returned", error);
-    });
   });
-  bio.textContent = null;
+
+  bio.textContent = Data.then(response => {
+    const newData = response.data.bio;
+    bio.textContent = `Bio: ${newData}`;
+  });
 
   // Tree structure
   cards.append(cardWrapper);
@@ -159,13 +138,12 @@ function newCard(Data) {
 
   return cardWrapper;
 }
-const axiosPromises = axios.get("https://api.github.com/users/nuvallo");
-console.log(axiosPromises);
-axiosPromises.then(response => {
-  const newData = response.data;
-  console.log(newData);
-  axiosPromises.catch(error => {
-    console.log("The data was not returned", error);
-  });
-});
-newCard(axiosPromises);
+
+function person(link) {
+  const axiosPromises = axios.get(`${link}`);
+  return axiosPromises;
+}
+
+newCard(person(`https://api.github.com/users/nuvallo`));
+newCard(person(`https://api.github.com/users/Heart8reak`));
+newCard(person(`https://api.github.com/users/tetondan`));
