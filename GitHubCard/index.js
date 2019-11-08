@@ -148,6 +148,7 @@ function person(link) {
   return axiosPromises;
 }
 
+newCard(person("https://api.github.com/users/nuvallo"));
 followersArray.push("https://api.github.com/users/tetondan");
 followersArray.push("https://api.github.com/users/dustinmyers");
 followersArray.push("https://api.github.com/users/justsml");
