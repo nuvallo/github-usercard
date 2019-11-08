@@ -75,6 +75,7 @@ function newCard(Data) {
     const newData = response.data.avatar_url;
     image.src = newData;
   });
+
   CardInfo.classList.add("card-info");
   headingThree.classList.add("name");
   username.classList.add("username");
@@ -92,10 +93,12 @@ function newCard(Data) {
       headingThree.textContent = newData;
     }
   });
+
   username.textContent = Data.then(response => {
     const newData = response.data.login;
     username.textContent = newData;
   });
+
   location.textContent = Data.then(response => {
     const newData = response.data.location;
     location.textContent = `Location: ${newData}`;
@@ -139,11 +142,17 @@ function newCard(Data) {
   return cardWrapper;
 }
 
+// link function
 function person(link) {
   const axiosPromises = axios.get(`${link}`);
   return axiosPromises;
 }
 
-newCard(person(`https://api.github.com/users/nuvallo`));
-newCard(person(`https://api.github.com/users/Heart8reak`));
-newCard(person(`https://api.github.com/users/tetondan`));
+followersArray.push("https://api.github.com/users/tetondan");
+followersArray.push("https://api.github.com/users/dustinmyers");
+followersArray.push("https://api.github.com/users/justsml");
+followersArray.push("https://api.github.com/users/Heart8reak");
+followersArray.push("https://api.github.com/users/bigknell");
+followersArray.forEach(user => {
+  newCard(person(user));
+});
